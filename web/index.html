@@ -9,45 +9,28 @@
   <body>
     <h1>Welcome to the Shop Management System</h1>
 
-    <!-- Product Type Selection -->
-    <div class="product-type-selection">
-      <label for="productType">Choose a Product Type:</label>
-      <select id="productType" name="productType">
-        <option value="electronics">Electronics</option>
-        <option value="groceries">Groceries</option>
-        <option value="clothing">Clothing</option>
-        <!-- more options -->
-      </select>
-    </div>
-
-    <!-- Add Product Form -->
-    <div class="form-container">
-      <h2>Add a New Product</h2>
-      <form id="addProductForm">
-        <input type="text" id="productName" placeholder="Product Name" />
-        <input type="number" id="productPrice" placeholder="Product Price" />
-        <button type="submit">Add Product</button>
-      </form>
-    </div>
-
-    <!-- Product List -->
-    <section id="productList">
-      <h2>Product List</h2>
-      <ul id="productItems">
-        <!-- Product items will be listed here -->
+    <!-- Main Navigation Menu -->
+    <nav class="main-menu">
+      <ul>
+        <li>
+          <button onclick="location.href='list-products.html'">
+            List Products
+          </button>
+        </li>
+        <li>
+          <button onclick="location.href='add-product.html'">
+            Add New Product
+          </button>
+        </li>
+        <li>
+          <button onclick="location.href='search-product.html'">
+            Search Product
+          </button>
+        </li>
+        <li><button onclick="location.href='exit.html'">Exit</button></li>
       </ul>
-    </section>
+    </nav>
 
-    <!-- Search Bar -->
-    <section id="searchProducts">
-      <h2>Search Products</h2>
-      <input type="text" id="searchQuery" placeholder="Search for a product" />
-      <button id="searchButton">Search</button>
-      <div id="searchResults">
-        <!-- Search results will be displayed here -->
-      </div>
-    </section>
-
-    <script src="./dist"></script>
+    <script src="./dist/main.js"></script>
   </body>
 </html>
