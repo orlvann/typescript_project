@@ -48,23 +48,24 @@ export class SingletonApplication extends BaseApplication {
     return filteredResults;
   }
   // Custom method to filter products based on customer preferences
-  private filterByCustomerPreferences(
-    customer: Customer,
-    products: Product[]
-  ): Product[] {
+  private filterByCustomerPreferences(products: Product[]): Product[] {
     // Initialize an empty array to store filtered products
     const filteredProducts: Product[] = [];
 
-    // Retrieve the customer's favorite category from their preferences
-    const favoriteCategory = customer.favoriteCategory;
+    // Iterate through the customers and their preferences
+    for (const customer of this.customers) {
+      // Example: Let's assume customers have a preference for "Electronics" category
+      // You can replace this with your actual customer preference logic
+      const preferredCategory = 'Electronics';
 
-    // Filter products based on the customer's favorite category
-    const customerFilteredProducts = products.filter(product => {
-      return product.category === favoriteCategory;
-    });
+      // Filter products based on customer's preferred category
+      const customerFilteredProducts = products.filter(product => {
+        return product.category === preferredCategory;
+      });
 
-    // Add the filtered products to the result array
-    filteredProducts.push(...customerFilteredProducts);
+      // Add the filtered products to the result array
+      filteredProducts.push(...customerFilteredProducts);
+    }
 
     return filteredProducts;
   }

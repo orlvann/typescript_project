@@ -50,7 +50,7 @@ function displayMainMenu() {
                 addProduct();
                 break;
             case '3':
-                searchForProduct();
+                searchProduct();
                 break;
             case '4':
                 rl.close();
@@ -63,7 +63,7 @@ function displayMainMenu() {
         }
     });
 }
-// Define addProduct function
+//  addProduct function
 function addProduct() {
     rl.question('Enter product name: ', name => {
         rl.question('Enter product price: ', price => {
@@ -77,16 +77,13 @@ function addProduct() {
         });
     });
 }
-// Define searchForProduct function
-function searchForProduct() {
+//  searchProduct function
+function searchProduct() {
     rl.question('Enter search keyword: ', keyword => {
         rl.question('Enter category (optional): ', category => {
             rl.question('Enter minimum price (optional): ', minPrice => {
                 rl.question('Enter maximum price (optional): ', maxPrice => {
-                    const searchResults = app.searchProducts(keyword, category || undefined, {
-                        min: minPrice ? parseFloat(minPrice) : 0,
-                        max: maxPrice ? parseFloat(maxPrice) : Number.MAX_VALUE,
-                    }
+                    const searchResults = app.searchProducts(keyword
                     // Assuming 'rating' is implemented in your 'searchProducts' method
                     // You would also ask for a rating input here if necessary
                     );
