@@ -1,4 +1,5 @@
 import { BaseApplication } from './models/application';
+import { BaseProduct } from './models/baseClasses';
 import {
   GroceryProduct,
   BrandedProduct,
@@ -23,21 +24,16 @@ function displayMainMenu() {
   console.log('3. Search for a product');
   console.log('4. Exit');
 
-  rl.question('Enter your choice: ', (answer) => {
+  rl.question('Enter your choice: ', answer => {
     switch (answer.trim()) {
       case '1':
         app.displayProducts();
         break;
       case '2':
-        // Here you would add logic to input product details and call app.addProduct()
+        addProduct();
         break;
       case '3':
-        rl.question('Enter search keyword: ', (keyword) => {
-          const searchResults = app.searchProducts(keyword);
-          console.log('\nSearch Results:');
-          searchResults.forEach((result) => result.display());
-          displayMainMenu();
-        });
+        searchForProduct();
         break;
       case '4':
         rl.close();
@@ -49,6 +45,55 @@ function displayMainMenu() {
     if (answer.trim() !== '4') {
       displayMainMenu();
     }
+  });
+}
+
+// Define addProduct function
+function addProduct(): void {
+  rl.question('Enter product name: ', name => {
+    rl.question('Enter product price: ', price => {
+      rl.question('Enter product category: ', category => {
+        // Assuming 'BaseProduct' accepts category and price is converted to number
+        const newProduct = new BaseProduct(
+          Date.now(),
+          name,
+          parseFloat(price),
+          category
+        );
+        app.addProduct(newProduct);
+        console.log(`${name} has been added to the product list.`);
+        displayMainMenu();
+      });
+    });
+  });
+}
+
+// Define searchForProduct function
+function searchForProduct(): void {
+  rl.question('Enter search keyword: ', keyword => {
+    rl.question('Enter category (optional): ', category => {
+      rl.question('Enter minimum price (optional): ', minPrice => {
+        rl.question('Enter maximum price (optional): ', maxPrice => {
+          const searchResults = app.searchProducts(
+            keyword,
+            category || undefined,
+            {
+              min: minPrice ? parseFloat(minPrice) : 0,
+              max: maxPrice ? parseFloat(maxPrice) : Number.MAX_VALUE,
+            }
+            // Assuming 'rating' is implemented in your 'searchProducts' method
+            // You would also ask for a rating input here if necessary
+          );
+          console.log('\nSearch Results:');
+          if (searchResults.length) {
+            searchResults.forEach(result => result.display());
+          } else {
+            console.log('No products found.');
+          }
+          displayMainMenu();
+        });
+      });
+    });
   });
 }
 

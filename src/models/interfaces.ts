@@ -2,6 +2,8 @@ export interface Product {
   id: number;
   name: string;
   price: number;
+  category?: string;
+  rating?: number;
   display(): void;
 }
 
@@ -30,4 +32,10 @@ export interface Application {
   removeProduct(productId: number): void;
   displayProducts(): void;
   searchProducts(keyword: string): Product[];
+}
+
+export interface Customer {
+  id: number;
+  name: string;
+  // Add other relevant customer properties
 }

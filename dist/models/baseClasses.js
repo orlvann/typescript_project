@@ -23,19 +23,61 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseApplication = exports.BaseReceipt = exports.BaseOrder = exports.BaseCatalogue = exports.BaseCategory = exports.BaseProduct = void 0;
+exports.BaseApplication = exports.BaseReceipt = exports.BaseOrder = exports.BaseCatalogue = exports.BaseCategory = exports.BrandedProduct = exports.ElectroProduct = exports.GroceryProduct = exports.BaseProduct = void 0;
 const fs = __importStar(require("fs"));
 class BaseProduct {
-    constructor(id, name, price) {
+    constructor(id, name, price, category, // Now included
+    rating // Now included
+    ) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.category = category;
+        this.rating = rating;
     }
     display() {
         console.log(`${this.name} - $${this.price}`);
     }
 }
 exports.BaseProduct = BaseProduct;
+class GroceryProduct extends BaseProduct {
+    constructor(id, name, price, category = 'Grocery', rating) {
+        super(id, name, price, category, rating);
+    }
+}
+exports.GroceryProduct = GroceryProduct;
+class ElectroProduct extends BaseProduct {
+    constructor(id, name, price, category = 'Electronics', rating, warrantyPeriod) {
+        super(id, name, price, category, rating);
+        this.warrantyPeriod = warrantyPeriod;
+    }
+    displayWarrantyInfo() {
+        if (this.warrantyPeriod) {
+            console.log(`Warranty Information for ${this.name}:`);
+            console.log(`Warranty Period: ${this.warrantyPeriod} months`);
+        }
+        else {
+            console.log('Warranty information is not available for this product.');
+        }
+    }
+}
+exports.ElectroProduct = ElectroProduct;
+class BrandedProduct extends BaseProduct {
+    constructor(id, name, price, category = 'Branded', rating, brandName) {
+        super(id, name, price, category, rating);
+        this.brandName = brandName;
+    }
+    displayBrandInfo() {
+        if (this.brandName) {
+            console.log(`Product Name: ${this.name}`);
+            console.log(`Brand Name: ${this.brandName}`);
+        }
+        else {
+            console.log('Brand information not available.');
+        }
+    }
+}
+exports.BrandedProduct = BrandedProduct;
 class BaseCategory {
     constructor(id, name, products = []) {
         this.id = id;
@@ -49,8 +91,7 @@ class BaseCatalogue {
         this.categories = [];
     }
     addProductToCategory(productId, categoryId) {
-        // Find the category by ID
-        const category = this.categories.find((c) => c.id === categoryId);
+        const category = this.categories.find(c => c.id === categoryId);
         // If the category exists, add the product to it
         if (category) {
             const product = new BaseProduct(productId, `Product ${productId}`, 0); // You can set the actual product details
@@ -58,13 +99,13 @@ class BaseCatalogue {
         }
     }
     deleteCategory(categoryId) {
-        this.categories = this.categories.filter((c) => c.id !== categoryId);
+        this.categories = this.categories.filter(c => c.id !== categoryId);
     }
     displayCategories() {
         console.log('Categories:');
-        this.categories.forEach((category) => {
+        this.categories.forEach(category => {
             console.log(`${category.name} (ID: ${category.id})`);
-            category.products.forEach((product) => {
+            category.products.forEach(product => {
                 console.log(`  - ${product.name} (ID: ${product.id}, Price: $${product.price})`);
             });
         });
@@ -80,11 +121,11 @@ class BaseOrder {
         this.products.push(product);
     }
     removeProduct(productId) {
-        this.products = this.products.filter((p) => p.id !== productId);
+        this.products = this.products.filter(p => p.id !== productId);
     }
     displayOrder() {
         console.log(`Order ${this.id}:`);
-        this.products.forEach((product) => product.display());
+        this.products.forEach(product => product.display());
     }
     deleteOrder(orderId) {
         // Implement logic to delete an order
@@ -95,12 +136,12 @@ BaseOrder.orderCount = 0;
 class BaseReceipt {
     generateReceipt(order) {
         console.log(`Receipt for Order ${order.id}:`);
-        order.products.forEach((product) => product.display());
+        order.products.forEach(product => product.display());
         console.log('Total Amount:', order.products.reduce((sum, product) => sum + product.price, 0));
     }
     generateInvoice(order) {
         console.log(`Invoice for Order ${order.id}:`);
-        order.products.forEach((product) => {
+        order.products.forEach(product => {
             console.log(`  - ${product.name} - $${product.price}`);
         });
         console.log('Total Amount:', order.products.reduce((sum, product) => sum + product.price, 0));
@@ -116,14 +157,24 @@ class BaseApplication {
         this.products.push(product);
     }
     removeProduct(productId) {
-        this.products = this.products.filter((p) => p.id !== productId);
+        this.products = this.products.filter(p => p.id !== productId);
     }
     displayProducts() {
         console.log('Products:');
-        this.products.forEach((product) => product.display());
+        this.products.forEach(product => product.display());
     }
-    searchProducts(keyword) {
-        return this.products.filter((p) => p.name.toLowerCase().includes(keyword.toLowerCase()));
+    searchProducts(keyword, category, minPrice, maxPrice, rating) {
+        return this.products.filter(product => {
+            const matchesKeyword = product.name
+                .toLowerCase()
+                .includes(keyword.toLowerCase());
+            const matchesCategory = category ? product.category === category : true;
+            const matchesPriceRange = minPrice && maxPrice
+                ? product.price >= minPrice && product.price <= maxPrice
+                : true;
+            const matchesRating = rating ? product.rating === rating : true;
+            return (matchesKeyword && matchesCategory && matchesPriceRange && matchesRating);
+        });
     }
     createOrder() {
         const order = new BaseOrder();
@@ -131,7 +182,7 @@ class BaseApplication {
         return order;
     }
     deleteOrder(orderId) {
-        this.orders = this.orders.filter((order) => order.id !== orderId);
+        this.orders = this.orders.filter(order => order.id !== orderId);
     }
     saveDataToFile(filename) {
         const dataToSave = {
