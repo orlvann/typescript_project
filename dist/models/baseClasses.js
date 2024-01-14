@@ -26,9 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseApplication = exports.BaseReceipt = exports.BaseOrder = exports.BaseCatalogue = exports.BaseCategory = exports.BrandedProduct = exports.ElectroProduct = exports.GroceryProduct = exports.BaseProduct = void 0;
 const fs = __importStar(require("fs"));
 class BaseProduct {
-    constructor(id, name, price, category, // Now included
-    rating // Now included
-    ) {
+    constructor(id, name, price, category, rating) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -84,6 +82,13 @@ class BaseCategory {
         this.name = name;
         this.products = products;
     }
+    addProduct(product) {
+        this.products.push(product);
+    }
+    listProducts() {
+        console.log(`Products in ${this.name} category:`);
+        this.products.forEach((p) => console.log(`- ${p.name}`));
+    }
 }
 exports.BaseCategory = BaseCategory;
 class BaseCatalogue {
@@ -91,21 +96,20 @@ class BaseCatalogue {
         this.categories = [];
     }
     addProductToCategory(productId, categoryId) {
-        const category = this.categories.find(c => c.id === categoryId);
-        // If the category exists, add the product to it
+        const category = this.categories.find((c) => c.id === categoryId);
         if (category) {
-            const product = new BaseProduct(productId, `Product ${productId}`, 0); // You can set the actual product details
+            const product = new BaseProduct(productId, `Product ${productId}`, 0);
             category.products.push(product);
         }
     }
     deleteCategory(categoryId) {
-        this.categories = this.categories.filter(c => c.id !== categoryId);
+        this.categories = this.categories.filter((c) => c.id !== categoryId);
     }
     displayCategories() {
         console.log('Categories:');
-        this.categories.forEach(category => {
+        this.categories.forEach((category) => {
             console.log(`${category.name} (ID: ${category.id})`);
-            category.products.forEach(product => {
+            category.products.forEach((product) => {
                 console.log(`  - ${product.name} (ID: ${product.id}, Price: $${product.price})`);
             });
         });
@@ -121,11 +125,11 @@ class BaseOrder {
         this.products.push(product);
     }
     removeProduct(productId) {
-        this.products = this.products.filter(p => p.id !== productId);
+        this.products = this.products.filter((p) => p.id !== productId);
     }
     displayOrder() {
         console.log(`Order ${this.id}:`);
-        this.products.forEach(product => product.display());
+        this.products.forEach((product) => product.display());
     }
     deleteOrder(orderId) {
         // Implement logic to delete an order
@@ -136,12 +140,12 @@ BaseOrder.orderCount = 0;
 class BaseReceipt {
     generateReceipt(order) {
         console.log(`Receipt for Order ${order.id}:`);
-        order.products.forEach(product => product.display());
+        order.products.forEach((product) => product.display());
         console.log('Total Amount:', order.products.reduce((sum, product) => sum + product.price, 0));
     }
     generateInvoice(order) {
         console.log(`Invoice for Order ${order.id}:`);
-        order.products.forEach(product => {
+        order.products.forEach((product) => {
             console.log(`  - ${product.name} - $${product.price}`);
         });
         console.log('Total Amount:', order.products.reduce((sum, product) => sum + product.price, 0));
@@ -157,14 +161,14 @@ class BaseApplication {
         this.products.push(product);
     }
     removeProduct(productId) {
-        this.products = this.products.filter(p => p.id !== productId);
+        this.products = this.products.filter((p) => p.id !== productId);
     }
     displayProducts() {
         console.log('Products:');
-        this.products.forEach(product => product.display());
+        this.products.forEach((product) => product.display());
     }
     searchProducts(keyword, category, minPrice, maxPrice, rating) {
-        return this.products.filter(product => {
+        return this.products.filter((product) => {
             const matchesKeyword = product.name
                 .toLowerCase()
                 .includes(keyword.toLowerCase());
@@ -182,7 +186,7 @@ class BaseApplication {
         return order;
     }
     deleteOrder(orderId) {
-        this.orders = this.orders.filter(order => order.id !== orderId);
+        this.orders = this.orders.filter((order) => order.id !== orderId);
     }
     saveDataToFile(filename) {
         const dataToSave = {

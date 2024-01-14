@@ -1,11 +1,17 @@
-import { BaseApplication, BaseOrder } from './baseClasses';
-import { Product, Order, Customer } from './interfaces';
+import { BaseApplication, BaseOrder, BaseCategory } from './baseClasses';
+import { Product, Order, Customer, Category } from './interfaces';
 
 export class SingletonApplication extends BaseApplication {
   private static instance: SingletonApplication;
+  private customers: Customer[] = [];
+  private categories: Category[] = []; // Added catalog management
 
   private constructor() {
     super();
+    // Initialize default categories, if needed
+    this.categories.push(new BaseCategory(1, 'Electronics'));
+    this.categories.push(new BaseCategory(2, 'Groceries'));
+    // Add more categories as required
   }
 
   public static getInstance(): SingletonApplication {
@@ -14,8 +20,6 @@ export class SingletonApplication extends BaseApplication {
     }
     return SingletonApplication.instance;
   }
-
-  private customers: Customer[] = [];
 
   public addCustomer(customer: Customer): void {
     this.customers.push(customer);
@@ -26,6 +30,15 @@ export class SingletonApplication extends BaseApplication {
     return order;
   }
 
+  public addProductToCategory(product: Product, categoryName: string): void {
+    const category = this.categories.find((c) => c.name === categoryName);
+    if (category) {
+      category.addProduct(product);
+    } else {
+      console.log(`Category '${categoryName}' not found.`);
+    }
+  }
+
   public searchProducts(
     keyword: string,
     category?: string,
@@ -34,7 +47,7 @@ export class SingletonApplication extends BaseApplication {
     rating?: number
   ): Product[] {
     // Customize the search logic here if needed
-    const baseSearchResults = super.searchProducts(
+    let searchResults = super.searchProducts(
       keyword,
       category,
       minPrice,
@@ -42,32 +55,26 @@ export class SingletonApplication extends BaseApplication {
       rating
     );
 
-    // Apply custom filtering based on customer preferences, if available
-    const filteredResults = this.filterByCustomerPreferences(baseSearchResults);
-
-    return filteredResults;
-  }
-  // Custom method to filter products based on customer preferences
-  private filterByCustomerPreferences(products: Product[]): Product[] {
-    // Initialize an empty array to store filtered products
-    const filteredProducts: Product[] = [];
-
-    // Iterate through the customers and their preferences
-    for (const customer of this.customers) {
-      // Example: Let's assume customers have a preference for "Electronics" category
-      // You can replace this with your actual customer preference logic
-      const preferredCategory = 'Electronics';
-
-      // Filter products based on customer's preferred category
-      const customerFilteredProducts = products.filter(product => {
-        return product.category === preferredCategory;
-      });
-
-      // Add the filtered products to the result array
-      filteredProducts.push(...customerFilteredProducts);
+    if (category) {
+      // Filter results further based on category
+      searchResults = searchResults.filter(
+        (product) => product.category === category
+      );
     }
 
-    return filteredProducts;
+    return searchResults;
+  }
+
+  // Additional methods to manage categories
+  public addCategory(category: Category): void {
+    this.categories.push(category);
+  }
+
+  public listCategories(): void {
+    this.categories.forEach((category) => {
+      console.log(`Category: ${category.name}`);
+      category.listProducts();
+    });
   }
 }
 

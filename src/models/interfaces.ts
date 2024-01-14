@@ -11,6 +11,9 @@ export interface Category {
   id: number;
   name: string;
   products: Product[];
+
+  addProduct(product: Product): void;
+  listProducts(): void;
 }
 
 export interface Catalogue {
@@ -37,5 +40,4 @@ export interface Application {
 export interface Customer {
   id: number;
   name: string;
-  // Add other relevant customer properties
 }

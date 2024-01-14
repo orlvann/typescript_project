@@ -13,8 +13,8 @@ export class BaseProduct implements Product {
     public id: number,
     public name: string,
     public price: number,
-    public category?: string, // Now included
-    public rating?: number // Now included
+    public category?: string,
+    public rating?: number
   ) {}
 
   display(): void {
@@ -35,7 +35,7 @@ export class GroceryProduct extends BaseProduct {
 }
 
 export class ElectroProduct extends BaseProduct {
-  public warrantyPeriod?: number; // Warranty period in months
+  public warrantyPeriod?: number;
 
   constructor(
     id: number,
@@ -90,30 +90,38 @@ export class BaseCategory implements Category {
     public name: string,
     public products: Product[] = []
   ) {}
+
+  addProduct(product: Product): void {
+    this.products.push(product);
+  }
+
+  listProducts(): void {
+    console.log(`Products in ${this.name} category:`);
+    this.products.forEach((p) => console.log(`- ${p.name}`));
+  }
 }
 
 export class BaseCatalogue implements Catalogue {
   categories: Category[] = [];
 
   addProductToCategory(productId: number, categoryId: number): void {
-    const category = this.categories.find(c => c.id === categoryId);
+    const category = this.categories.find((c) => c.id === categoryId);
 
-    // If the category exists, add the product to it
     if (category) {
-      const product = new BaseProduct(productId, `Product ${productId}`, 0); // You can set the actual product details
+      const product = new BaseProduct(productId, `Product ${productId}`, 0);
       category.products.push(product);
     }
   }
 
   deleteCategory(categoryId: number): void {
-    this.categories = this.categories.filter(c => c.id !== categoryId);
+    this.categories = this.categories.filter((c) => c.id !== categoryId);
   }
 
   displayCategories(): void {
     console.log('Categories:');
-    this.categories.forEach(category => {
+    this.categories.forEach((category) => {
       console.log(`${category.name} (ID: ${category.id})`);
-      category.products.forEach(product => {
+      category.products.forEach((product) => {
         console.log(
           `  - ${product.name} (ID: ${product.id}, Price: $${product.price})`
         );
@@ -138,12 +146,12 @@ export class BaseOrder implements Order {
   }
 
   removeProduct(productId: number): void {
-    this.products = this.products.filter(p => p.id !== productId);
+    this.products = this.products.filter((p) => p.id !== productId);
   }
 
   displayOrder(): void {
     console.log(`Order ${this.id}:`);
-    this.products.forEach(product => product.display());
+    this.products.forEach((product) => product.display());
   }
 
   deleteOrder(orderId: number): void {
@@ -154,7 +162,7 @@ export class BaseOrder implements Order {
 export class BaseReceipt implements Receipt {
   generateReceipt(order: Order): void {
     console.log(`Receipt for Order ${order.id}:`);
-    order.products.forEach(product => product.display());
+    order.products.forEach((product) => product.display());
     console.log(
       'Total Amount:',
       order.products.reduce((sum, product) => sum + product.price, 0)
@@ -163,7 +171,7 @@ export class BaseReceipt implements Receipt {
 
   generateInvoice(order: Order): void {
     console.log(`Invoice for Order ${order.id}:`);
-    order.products.forEach(product => {
+    order.products.forEach((product) => {
       console.log(`  - ${product.name} - $${product.price}`);
     });
     console.log(
@@ -182,12 +190,12 @@ export class BaseApplication implements Application {
   }
 
   removeProduct(productId: number): void {
-    this.products = this.products.filter(p => p.id !== productId);
+    this.products = this.products.filter((p) => p.id !== productId);
   }
 
   displayProducts(): void {
     console.log('Products:');
-    this.products.forEach(product => product.display());
+    this.products.forEach((product) => product.display());
   }
 
   searchProducts(
@@ -197,7 +205,7 @@ export class BaseApplication implements Application {
     maxPrice?: number,
     rating?: number
   ): Product[] {
-    return this.products.filter(product => {
+    return this.products.filter((product) => {
       const matchesKeyword = product.name
         .toLowerCase()
         .includes(keyword.toLowerCase());
@@ -221,7 +229,7 @@ export class BaseApplication implements Application {
   }
 
   deleteOrder(orderId: number): void {
-    this.orders = this.orders.filter(order => order.id !== orderId);
+    this.orders = this.orders.filter((order) => order.id !== orderId);
   }
 
   saveDataToFile(filename: string): void {
