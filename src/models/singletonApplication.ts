@@ -4,14 +4,13 @@ import { Product, Order, Customer, Category } from './interfaces';
 export class SingletonApplication extends BaseApplication {
   private static instance: SingletonApplication;
   private customers: Customer[] = [];
-  private categories: Category[] = []; // Added catalog management
+  private categories: Category[] = [];
 
   private constructor() {
     super();
-    // Initialize default categories, if needed
     this.categories.push(new BaseCategory(1, 'Electronics'));
     this.categories.push(new BaseCategory(2, 'Groceries'));
-    // Add more categories as required
+    this.categories.push(new BaseCategory(3, 'Brands'));
   }
 
   public static getInstance(): SingletonApplication {
@@ -31,7 +30,7 @@ export class SingletonApplication extends BaseApplication {
   }
 
   public addProductToCategory(product: Product, categoryName: string): void {
-    const category = this.categories.find((c) => c.name === categoryName);
+    const category = this.categories.find(c => c.name === categoryName);
     if (category) {
       category.addProduct(product);
     } else {
@@ -56,22 +55,20 @@ export class SingletonApplication extends BaseApplication {
     );
 
     if (category) {
-      // Filter results further based on category
       searchResults = searchResults.filter(
-        (product) => product.category === category
+        product => product.category === category
       );
     }
 
     return searchResults;
   }
 
-  // Additional methods to manage categories
   public addCategory(category: Category): void {
     this.categories.push(category);
   }
 
   public listCategories(): void {
-    this.categories.forEach((category) => {
+    this.categories.forEach(category => {
       console.log(`Category: ${category.name}`);
       category.listProducts();
     });
