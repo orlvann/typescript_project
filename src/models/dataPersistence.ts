@@ -11,21 +11,23 @@ import {
 
 export class BaseApplication {
   private products: Product[] = [];
+  private orders: BaseOrder[] = [];
+  private categories: BaseCategory[] = [];
 
   addProduct(product: Product): void {
     this.products.push(product);
   }
 
   removeProduct(productId: number): void {
-    this.products = this.products.filter(p => p.id !== productId);
+    this.products = this.products.filter((p) => p.id !== productId);
   }
 
   displayProducts(): void {
-    this.products.forEach(product => product.display());
+    this.products.forEach((product) => product.display());
   }
 
   searchProducts(keyword: string): Product[] {
-    return this.products.filter(p =>
+    return this.products.filter((p) =>
       p.name.toLowerCase().includes(keyword.toLowerCase())
     );
   }
@@ -77,12 +79,12 @@ export class BaseApplication {
       // Load Orders
       if (data.orders && Array.isArray(data.orders)) {
         this.orders = data.orders.map((orderData: any) => {
-          const order = new BaseOrder(orderData.id); // Assuming BaseOrder is your order class
-          // Add products to the order. Assuming each order has an array of product IDs.
-          orderData.productIds.forEach(productId => {
-            const product = this.products.find(p => p.id === productId);
+          const order = new BaseOrder(orderData.id);
+          orderData.productIds.forEach((productId: number) => {
+            // Explicit type for productId
+            const product = this.products.find((p) => p.id === productId);
             if (product) {
-              order.addProduct(product); // Assuming you have an addProduct method in your Order class
+              order.addProduct(product);
             }
           });
           return order;
@@ -92,19 +94,17 @@ export class BaseApplication {
       // Load Categories
       if (data.categories && Array.isArray(data.categories)) {
         this.categories = data.categories.map((categoryData: any) => {
-          const category = new BaseCategory(categoryData.id, categoryData.name); // Assuming BaseCategory is your category class
-          // Add products to the category. Assuming each category has an array of product IDs.
-          categoryData.productIds.forEach(productId => {
-            const product = this.products.find(p => p.id === productId);
+          const category = new BaseCategory(categoryData.id, categoryData.name);
+          categoryData.productIds.forEach((productId: number) => {
+            // Explicit type for productId
+            const product = this.products.find((p) => p.id === productId);
             if (product) {
-              category.addProduct(product); // Assuming you have an addProduct method in your Category class
+              category.addProduct(product);
             }
           });
           return category;
         });
       }
-
-      // ... (rest of the loadDataFromFile method)
     } catch (error) {
       console.error('Error loading data from file:', error);
     }

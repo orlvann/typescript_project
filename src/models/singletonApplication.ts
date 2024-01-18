@@ -2,11 +2,10 @@ import { BaseApplication, BaseOrder, BaseCategory } from './baseClasses';
 import { Product, Order, Customer, Category } from './interfaces';
 
 export class SingletonApplication extends BaseApplication {
-  private static instance: SingletonApplication;
-  private customers: Customer[] = [];
-  private categories: Category[] = [];
-
-  private constructor() {
+  protected static instance: SingletonApplication;
+  protected customers: Customer[] = [];
+  protected categories: Category[] = [];
+  protected constructor() {
     super();
     this.categories.push(new BaseCategory(1, 'Electronics'));
     this.categories.push(new BaseCategory(2, 'Groceries'));
@@ -30,7 +29,7 @@ export class SingletonApplication extends BaseApplication {
   }
 
   public addProductToCategory(product: Product, categoryName: string): void {
-    const category = this.categories.find(c => c.name === categoryName);
+    const category = this.categories.find((c) => c.name === categoryName);
     if (category) {
       category.addProduct(product);
     } else {
@@ -56,7 +55,7 @@ export class SingletonApplication extends BaseApplication {
 
     if (category) {
       searchResults = searchResults.filter(
-        product => product.category === category
+        (product) => product.category === category
       );
     }
 
@@ -68,7 +67,7 @@ export class SingletonApplication extends BaseApplication {
   }
 
   public listCategories(): void {
-    this.categories.forEach(category => {
+    this.categories.forEach((category) => {
       console.log(`Category: ${category.name}`);
       category.listProducts();
     });
