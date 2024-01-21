@@ -5,7 +5,7 @@
 # Installation
 # To get started with this project, you will need to clone the repository and install its dependencies. Run the following commands in your terminal:
 
-git clone [repository-url]
+git clone https://github.com/orlvann/typescript_project.git
 cd typescript_project
 npm install
 
