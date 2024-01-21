@@ -37,6 +37,7 @@ export class BaseApplication {
       const rawData = fs.readFileSync(filename, 'utf8');
       const data = JSON.parse(rawData);
 
+      // Load Products
       this.products = data.products.map((productData: any) => {
         switch (productData.type) {
           case 'GroceryProduct':
@@ -79,7 +80,7 @@ export class BaseApplication {
       // Load Orders
       if (data.orders && Array.isArray(data.orders)) {
         this.orders = data.orders.map((orderData: any) => {
-          const order = new BaseOrder(orderData.id);
+          const order = new BaseOrder();
           orderData.productIds.forEach((productId: number) => {
             // Explicit type for productId
             const product = this.products.find((p) => p.id === productId);
@@ -107,6 +108,22 @@ export class BaseApplication {
       }
     } catch (error) {
       console.error('Error loading data from file:', error);
+    }
+  }
+
+  saveDataToFile(filename: string): void {
+    try {
+      const dataToSave = {
+        products: this.products,
+        orders: this.orders,
+        categories: this.categories,
+      };
+
+      const jsonData = JSON.stringify(dataToSave, null, 2); // Beautify the JSON output
+      fs.writeFileSync(filename, jsonData, 'utf8');
+      console.log(`Data successfully saved to ${filename}`);
+    } catch (error) {
+      console.error('Error saving data to file:', error);
     }
   }
 }

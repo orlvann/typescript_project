@@ -136,8 +136,8 @@ export class BaseOrder implements Order {
   id: number;
   products: Product[];
 
-  constructor() {
-    this.id = ++BaseOrder.orderCount;
+  constructor(id?: number) {
+    this.id = id ?? ++BaseOrder.orderCount;
     this.products = [];
   }
 

@@ -1,4 +1,6 @@
+import * as fs from 'fs';
 import { Product, Order, Category } from './interfaces';
+import { ElectroProduct, BrandedProduct } from './descendantClasses';
 
 export interface Application {
   addProduct(product: Product): void;
@@ -16,8 +18,16 @@ export class BaseApplication implements Application {
     this.products.push(product);
   }
 
-  removeProduct(productId: number): void {
-    this.products = this.products.filter((p) => p.id !== productId);
+  removeProductByName(productName: string): void {
+    const productIndex = this.products.findIndex(
+      (p) => p.name.toLowerCase() === productName.toLowerCase()
+    );
+    if (productIndex > -1) {
+      this.products.splice(productIndex, 1);
+      console.log(`Product ${productName} has been removed.`);
+    } else {
+      console.log(`Product ${productName} not found.`);
+    }
   }
 
   displayProducts(): void {
@@ -46,5 +56,25 @@ export class BaseApplication implements Application {
         matchesKeyword && matchesCategory && matchesPriceRange && matchesRating
       );
     });
+  }
+
+  saveDataToFile(filename: string): void {
+    const dataToSave = {
+      products: this.products.map((product) => ({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        category: product.category,
+        rating: product.rating,
+
+        warrantyPeriod: (product as ElectroProduct).warrantyPeriod,
+        brandName: (product as BrandedProduct).brandName,
+      })),
+      orders: this.orders,
+      categories: this.categories,
+    };
+
+    fs.writeFileSync(filename, JSON.stringify(dataToSave, null, 2));
+    console.log(`Data saved to ${filename}`);
   }
 }

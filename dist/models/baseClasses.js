@@ -117,8 +117,8 @@ class BaseCatalogue {
 }
 exports.BaseCatalogue = BaseCatalogue;
 class BaseOrder {
-    constructor() {
-        this.id = ++BaseOrder.orderCount;
+    constructor(id) {
+        this.id = id !== null && id !== void 0 ? id : ++BaseOrder.orderCount;
         this.products = [];
     }
     addProduct(product) {
@@ -156,6 +156,7 @@ class BaseApplication {
     constructor() {
         this.products = [];
         this.orders = [];
+        this.categories = [];
     }
     addProduct(product) {
         this.products.push(product);
