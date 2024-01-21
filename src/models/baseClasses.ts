@@ -145,10 +145,6 @@ export class BaseOrder implements Order {
     this.products.push(product);
   }
 
-  removeProduct(productId: number): void {
-    this.products = this.products.filter((p) => p.id !== productId);
-  }
-
   displayOrder(): void {
     console.log(`Order ${this.id}:`);
     this.products.forEach((product) => product.display());
@@ -190,8 +186,16 @@ export class BaseApplication implements Application {
     this.products.push(product);
   }
 
-  removeProduct(productId: number): void {
-    this.products = this.products.filter((p) => p.id !== productId);
+  removeProduct(productName: string): void {
+    const productIndex = this.products.findIndex(
+      (p) => p.name.toLowerCase() === productName.toLowerCase()
+    );
+    if (productIndex > -1) {
+      this.products.splice(productIndex, 1);
+      console.log(`Product ${productName} has been removed.`);
+    } else {
+      console.log(`Product ${productName} not found.`);
+    }
   }
 
   displayProducts(): void {

@@ -1,10 +1,10 @@
 import * as fs from 'fs';
 import { Product, Order, Category } from './interfaces';
-import { ElectroProduct, BrandedProduct } from './descendantClasses';
+import { ElectroProduct, BrandedProduct } from './baseClasses';
 
 export interface Application {
   addProduct(product: Product): void;
-  removeProduct(productId: number): void;
+  removeProduct(productName: string): void;
   displayProducts(): void;
   searchProducts(keyword: string): Product[];
 }
@@ -18,7 +18,7 @@ export class BaseApplication implements Application {
     this.products.push(product);
   }
 
-  removeProductByName(productName: string): void {
+  removeProduct(productName: string): void {
     const productIndex = this.products.findIndex(
       (p) => p.name.toLowerCase() === productName.toLowerCase()
     );

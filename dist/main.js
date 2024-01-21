@@ -42,15 +42,19 @@ const rl = readline.createInterface({
 });
 const app = new application_1.BaseApplication();
 function displayMainMenu() {
-    console.log('\nAvailable Actions:');
-    console.log('1. List all products');
-    console.log('2. Add a new product');
-    console.log('3. Search for a product');
-    console.log('4. Exit');
-    rl.question('Enter your choice: ', (answer) => {
-        switch (answer.trim()) {
+    console.log(`
+    Available Actions:
+    1. List all products
+    2. Add a new product
+    3. Search for a product
+    4. Remove a product
+    5. Exit
+  `);
+    rl.question('Enter your choice: ', (choice) => {
+        switch (choice.trim()) {
             case '1':
                 app.displayProducts();
+                displayMainMenu();
                 break;
             case '2':
                 addProduct();
@@ -59,11 +63,20 @@ function displayMainMenu() {
                 searchProduct();
                 break;
             case '4':
-                rl.close();
+                rl.question('Enter the name of the product to remove: ', (name) => {
+                    app.removeProduct(name);
+                    app.saveDataToFile('src/products.json');
+                    displayMainMenu();
+                });
+                break;
+            case '5':
+                console.log('Exiting application.');
+                rl.close(); // Corrected to use the readline instance
                 break;
             default:
-                console.log('Invalid option, please try again.');
+                console.log('Invalid choice, please try again.');
                 displayMainMenu();
+                break;
         }
     });
 }

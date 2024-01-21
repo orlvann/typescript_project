@@ -40,9 +40,9 @@ function displayMainMenu() {
         rl.question(
           'Enter the name of the product to remove: ',
           (name: string) => {
-            app.removeProductByName(name); // Modified to use the name for removal
-            app.saveDataToFile('path/to/products.json'); // Save changes to the file
-            displayMainMenu(); // Show the menu again
+            app.removeProduct(name);
+            app.saveDataToFile('src/products.json');
+            displayMainMenu();
           }
         );
         break;

@@ -124,9 +124,6 @@ class BaseOrder {
     addProduct(product) {
         this.products.push(product);
     }
-    removeProduct(productId) {
-        this.products = this.products.filter((p) => p.id !== productId);
-    }
     displayOrder() {
         console.log(`Order ${this.id}:`);
         this.products.forEach((product) => product.display());
@@ -161,8 +158,15 @@ class BaseApplication {
     addProduct(product) {
         this.products.push(product);
     }
-    removeProduct(productId) {
-        this.products = this.products.filter((p) => p.id !== productId);
+    removeProduct(productName) {
+        const productIndex = this.products.findIndex((p) => p.name.toLowerCase() === productName.toLowerCase());
+        if (productIndex > -1) {
+            this.products.splice(productIndex, 1);
+            console.log(`Product ${productName} has been removed.`);
+        }
+        else {
+            console.log(`Product ${productName} not found.`);
+        }
     }
     displayProducts() {
         console.log('Products:');

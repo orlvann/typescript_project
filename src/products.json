@@ -1,0 +1,118 @@
+{
+  "products": [
+    {
+      "id": 11,
+      "name": "Milk",
+      "price": 0.99,
+      "category": "Grocery"
+    },
+    {
+      "id": 12,
+      "name": "Bread",
+      "price": 1.2,
+      "category": "Grocery"
+    },
+    {
+      "id": 13,
+      "name": "Cheese",
+      "price": 3.5,
+      "category": "Grocery"
+    },
+    {
+      "id": 1,
+      "name": "Apple",
+      "price": 1.5,
+      "category": "Grocery"
+    },
+    {
+      "id": 2,
+      "name": "Coca-Cola",
+      "price": 2.0,
+      "category": "Grocery"
+    },
+    {
+      "id": 5,
+      "name": "Banana",
+      "price": 0.5,
+      "category": "Grocery"
+    },
+    {
+      "id": 8,
+      "name": "Orange Juice",
+      "price": 3.0,
+      "category": "Grocery"
+    },
+    {
+      "id": 14,
+      "name": "Smartphone",
+      "price": 499.99,
+      "category": "Electronics"
+    },
+    {
+      "id": 15,
+      "name": "Headphones",
+      "price": 89.99,
+      "category": "Electronics"
+    },
+    {
+      "id": 16,
+      "name": "Camera",
+      "price": 259.99,
+      "category": "Electronics"
+    },
+    {
+      "id": 3,
+      "name": "Samsung TV",
+      "price": 899.99,
+      "category": "Electronics"
+    },
+    {
+      "id": 6,
+      "name": "Dell Laptop",
+      "price": 1200.0,
+      "category": "Electronics"
+    },
+    {
+      "id": 9,
+      "name": "Wireless Earphones",
+      "price": 59.99,
+      "category": "Electronics"
+    },
+    {
+      "id": 17,
+      "name": "Adidas Jacket",
+      "price": 79.99,
+      "category": "Branded"
+    },
+    {
+      "id": 18,
+      "name": "Jeans",
+      "price": 59.99,
+      "category": "Branded"
+    },
+    {
+      "id": 19,
+      "name": "Gucci Handbag",
+      "price": 550.0,
+      "category": "Branded"
+    },
+    {
+      "id": 4,
+      "name": "Nike Shoes",
+      "price": 99.99,
+      "category": "Branded"
+    },
+    {
+      "id": 7,
+      "name": "Adidas T-Shirt",
+      "price": 35.0,
+      "category": "Branded"
+    },
+    {
+      "id": 10,
+      "name": "Running Shoes",
+      "price": 85.0,
+      "category": "Branded"
+    }
+  ]
+}

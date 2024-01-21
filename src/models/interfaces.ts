@@ -32,7 +32,7 @@ export interface Receipt {
 
 export interface Application {
   addProduct(product: Product): void;
-  removeProduct(productId: number): void;
+  removeProduct(productName: string): void;
   displayProducts(): void;
   searchProducts(keyword: string): Product[];
 }
