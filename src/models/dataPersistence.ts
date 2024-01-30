@@ -127,7 +127,7 @@ export class BaseApplication {
         categories: this.categories,
       };
 
-      const jsonData = JSON.stringify(dataToSave, null, 2); // Beautify the JSON output
+      const jsonData = JSON.stringify(dataToSave, null, 2);
       fs.writeFileSync(filename, jsonData, 'utf8');
       console.log(`Data successfully saved to ${filename}`);
     } catch (error) {
