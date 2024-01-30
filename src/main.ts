@@ -48,7 +48,7 @@ function displayMainMenu() {
         break;
       case '5':
         console.log('Exiting application.');
-        rl.close(); // Corrected to use the readline instance
+        rl.close();
         break;
       default:
         console.log('Invalid choice, please try again.');
@@ -142,8 +142,6 @@ function askQuestion(question: string): Promise<string> {
 }
 
 function seedProducts(): void {
-  // Create instances of various products and add them to the application
-
   // Grocery products
   const milk = new GroceryProduct(11, 'Milk', 0.99);
   const bread = new GroceryProduct(12, 'Bread', 1.2);

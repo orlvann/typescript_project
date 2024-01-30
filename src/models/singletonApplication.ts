@@ -44,7 +44,6 @@ export class SingletonApplication extends BaseApplication {
     maxPrice?: number,
     rating?: number
   ): Product[] {
-    // Customize the search logic here if needed
     let searchResults = super.searchProducts(
       keyword,
       category,
