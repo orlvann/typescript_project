@@ -1,21 +1,10 @@
 import { BaseProduct, BaseReceipt } from './baseClasses';
 
-export class GroceryProduct extends BaseProduct {
-  // Additional properties/methods for grocery products
-}
+export class GroceryProduct extends BaseProduct {}
 
-export class BrandedProduct extends BaseProduct {
-  // Additional properties/methods for branded products
-}
+export class BrandedProduct extends BaseProduct {}
+export class ElectroProduct extends BaseProduct {}
 
-export class ElectroProduct extends BaseProduct {
-  // Additional properties/methods for electronic products
-}
+export class Invoice extends BaseReceipt {}
 
-export class Invoice extends BaseReceipt {
-  // Additional properties/methods for invoices
-}
-
-export class SimpleReceipt extends BaseReceipt {
-  // Additional properties/methods for simple receipts
-}
+export class SimpleReceipt extends BaseReceipt {}

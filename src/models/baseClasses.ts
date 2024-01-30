@@ -149,10 +149,6 @@ export class BaseOrder implements Order {
     console.log(`Order ${this.id}:`);
     this.products.forEach((product) => product.display());
   }
-
-  deleteOrder(orderId: number): void {
-    // Implement logic to delete an order
-  }
 }
 
 export class BaseReceipt implements Receipt {

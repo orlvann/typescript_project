@@ -1,118 +1,102 @@
 {
   "products": [
     {
-      "id": 11,
-      "name": "Milk",
-      "price": 0.99,
-      "category": "Grocery"
-    },
-    {
       "id": 12,
       "name": "Bread",
-      "price": 1.2,
-      "category": "Grocery"
+      "price": 1.2
     },
     {
       "id": 13,
       "name": "Cheese",
-      "price": 3.5,
-      "category": "Grocery"
+      "price": 3.5
     },
     {
       "id": 1,
       "name": "Apple",
-      "price": 1.5,
-      "category": "Grocery"
+      "price": 1.5
     },
     {
       "id": 2,
       "name": "Coca-Cola",
-      "price": 2.0,
-      "category": "Grocery"
+      "price": 2
     },
     {
       "id": 5,
       "name": "Banana",
-      "price": 0.5,
-      "category": "Grocery"
+      "price": 0.5
     },
     {
       "id": 8,
       "name": "Orange Juice",
-      "price": 3.0,
-      "category": "Grocery"
+      "price": 3
     },
     {
       "id": 14,
       "name": "Smartphone",
-      "price": 499.99,
-      "category": "Electronics"
+      "price": 499.99
     },
     {
       "id": 15,
       "name": "Headphones",
-      "price": 89.99,
-      "category": "Electronics"
+      "price": 89.99
     },
     {
       "id": 16,
       "name": "Camera",
-      "price": 259.99,
-      "category": "Electronics"
+      "price": 259.99
     },
     {
       "id": 3,
       "name": "Samsung TV",
-      "price": 899.99,
-      "category": "Electronics"
+      "price": 899.99
     },
     {
       "id": 6,
       "name": "Dell Laptop",
-      "price": 1200.0,
-      "category": "Electronics"
+      "price": 1200
     },
     {
       "id": 9,
       "name": "Wireless Earphones",
-      "price": 59.99,
-      "category": "Electronics"
+      "price": 59.99
     },
     {
       "id": 17,
       "name": "Adidas Jacket",
-      "price": 79.99,
-      "category": "Branded"
+      "price": 79.99
     },
     {
       "id": 18,
       "name": "Jeans",
-      "price": 59.99,
-      "category": "Branded"
+      "price": 59.99
     },
     {
       "id": 19,
       "name": "Gucci Handbag",
-      "price": 550.0,
-      "category": "Branded"
+      "price": 550
     },
     {
       "id": 4,
       "name": "Nike Shoes",
-      "price": 99.99,
-      "category": "Branded"
+      "price": 99.99
     },
     {
       "id": 7,
       "name": "Adidas T-Shirt",
-      "price": 35.0,
-      "category": "Branded"
+      "price": 35
     },
     {
       "id": 10,
       "name": "Running Shoes",
-      "price": 85.0,
-      "category": "Branded"
+      "price": 85
+    },
+    {
+      "id": 1706612363715,
+      "name": "Mango",
+      "price": 3,
+      "category": ""
     }
-  ]
+  ],
+  "orders": [],
+  "categories": []
 }
